@@ -363,7 +363,7 @@ footer a:hover {
 
 .intro p:not(.section-label),
 .mission-head p:not(.section-label),
-.careers p,
+.partners p,
 .cta p,
 .product-copy p:not(.section-label) {
   max-width: 760px;
@@ -626,33 +626,37 @@ footer a:hover {
   color: #fff;
 }
 
-.careers {
+.partners {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
   gap: clamp(28px, 7vw, 90px);
   align-items: start;
 }
 
-.role-list {
+.partner-list {
+  display: grid;
+  gap: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.13);
 }
 
-.role-list a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 26px 0;
+.partner-list article {
+  padding: 24px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-  text-decoration: none;
+}
+
+.partner-list span {
+  display: block;
+  margin-bottom: 8px;
+  color: #ff3b47;
+  font-family: Oswald, Pretendard, sans-serif;
   font-size: clamp(22px, 3vw, 34px);
   font-weight: 800;
 }
 
-.role-list b {
-  color: #ff3b47;
-  font-family: Oswald, Pretendard, sans-serif;
-  font-size: 16px;
+.partner-list p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.72;
 }
 
 .news {
@@ -692,6 +696,10 @@ footer {
 footer strong {
   color: #fff;
   font-family: Oswald, Pretendard, sans-serif;
+}
+
+footer small {
+  color: rgba(255, 255, 255, 0.44);
 }
 
 .reveal {
@@ -765,7 +773,7 @@ footer strong {
   .hero-section,
   .product,
   .product-tempo,
-  .careers {
+  .partners {
     grid-template-columns: 1fr;
   }
 

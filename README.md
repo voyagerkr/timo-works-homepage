@@ -4,7 +4,7 @@ Official static homepage for `timo.work`.
 
 The site introduces TIMO WORKS and its two products:
 
-- TIMO: gig-work matching iPhone app
+- TIMO: spare-time work matching mobile app
 - TEMPO: attendance-management SaaS at `https://tempo.timo.work/`
 
 ## Local development
