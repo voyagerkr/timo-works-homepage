@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 type Lang = 'ko' | 'en' | 'ja' | 'zh'
@@ -291,9 +291,7 @@ function App() {
   }, [lang])
 
   useCanvasFx(canvasRef)
-  usePageFx()
-
-  const marquee = useMemo(() => [...t.marquee, ...t.marquee], [t.marquee])
+  usePageFx(lang)
 
   return (
     <main>
@@ -349,10 +347,17 @@ function App() {
       </section>
 
       <div className="marquee" aria-hidden="true">
-        <div>
-          {marquee.map((item, idx) => (
-            <span key={`${item}-${idx}`}>{item}</span>
-          ))}
+        <div className="marquee-track">
+          <div className="marquee-group">
+            {t.marquee.map((item, idx) => (
+              <span key={`a-${item}-${idx}`}>{item}</span>
+            ))}
+          </div>
+          <div className="marquee-group">
+            {t.marquee.map((item, idx) => (
+              <span key={`b-${item}-${idx}`}>{item}</span>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -590,36 +595,13 @@ function useCanvasFx(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
   }, [canvasRef])
 }
 
-function usePageFx() {
+function useRevealFx(lang: Lang) {
+  // Reveal-on-scroll and count-up observers. These must be re-attached when the
+  // language changes: switching language remounts the keyed list items (e.g. the
+  // mission stats and news cards, whose React keys are language-dependent text),
+  // which detaches the original observers and would otherwise leave the new nodes
+  // stuck transparent (no `.in`) with their count animation never running.
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const spot = document.querySelector<HTMLElement>('#twspot')
-    let sx = window.innerWidth / 2
-    let sy = window.innerHeight / 2
-    let tx = sx
-    let ty = sy
-    let raf = 0
-
-    const tick = () => {
-      sx += (tx - sx) * 0.12
-      sy += (ty - sy) * 0.12
-      spot?.style.setProperty('--x', `${sx}px`)
-      spot?.style.setProperty('--y', `${sy}px`)
-      raf = requestAnimationFrame(tick)
-    }
-
-    const move = (event: PointerEvent) => {
-      tx = event.clientX
-      ty = event.clientY
-    }
-
-    const scroll = () => {
-      document.querySelectorAll<HTMLElement>('[data-par]').forEach((el) => {
-        const amount = Number(el.dataset.par ?? '0')
-        el.style.transform = `translate3d(0, ${window.scrollY * amount}px, 0)`
-      })
-    }
-
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -650,6 +632,48 @@ function usePageFx() {
       { threshold: 0.5 },
     )
 
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+    document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => countIo.observe(el))
+
+    return () => {
+      io.disconnect()
+      countIo.disconnect()
+    }
+  }, [lang])
+}
+
+function usePageFx(lang: Lang) {
+  useRevealFx(lang)
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const spot = document.querySelector<HTMLElement>('#twspot')
+    let sx = window.innerWidth / 2
+    let sy = window.innerHeight / 2
+    let tx = sx
+    let ty = sy
+    let raf = 0
+
+    const tick = () => {
+      sx += (tx - sx) * 0.12
+      sy += (ty - sy) * 0.12
+      spot?.style.setProperty('--x', `${sx}px`)
+      spot?.style.setProperty('--y', `${sy}px`)
+      raf = requestAnimationFrame(tick)
+    }
+
+    const move = (event: PointerEvent) => {
+      tx = event.clientX
+      ty = event.clientY
+    }
+
+    const scroll = () => {
+      document.querySelectorAll<HTMLElement>('[data-par]').forEach((el) => {
+        const amount = Number(el.dataset.par ?? '0')
+        el.style.transform = `translate3d(0, ${window.scrollY * amount}px, 0)`
+      })
+    }
+
     const tiltMove = (event: Event) => {
       const el = event.currentTarget as HTMLElement
       const pointer = event as PointerEvent
@@ -676,9 +700,6 @@ function usePageFx() {
       ;(event.currentTarget as HTMLElement).style.transform = ''
     }
 
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
-    document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => countIo.observe(el))
-
     if (!reduce) {
       tick()
       window.addEventListener('pointermove', move)
@@ -695,8 +716,6 @@ function usePageFx() {
 
     return () => {
       cancelAnimationFrame(raf)
-      io.disconnect()
-      countIo.disconnect()
       window.removeEventListener('pointermove', move)
       window.removeEventListener('scroll', scroll)
       document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
