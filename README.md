@@ -1,6 +1,6 @@
 # TIMO WORKS Homepage
 
-Official static homepage for `timo.work`.
+Official static homepage preview for `dev-home.timo.work`.
 
 The site introduces TIMO WORKS and its two products:
 
@@ -24,7 +24,7 @@ pnpm preview
 ## Deployment notes
 
 - Static build output is written to `dist/`.
-- `public/CNAME` contains `timo.work` for GitHub Pages custom-domain hosting.
+- `public/CNAME` contains `dev-home.timo.work` for GitHub Pages custom-domain hosting.
 - If deploying through Vercel or CloudFront instead, keep the root domain pointed at that host and serve the same `dist/` output.
 
 ## Source notes
