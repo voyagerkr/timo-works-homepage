@@ -13,6 +13,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 body {
@@ -51,6 +52,30 @@ a {
 
 button {
   border: 0;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #16e0ff;
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 999;
+  top: 12px;
+  left: 12px;
+  transform: translateY(-140%);
+  padding: 10px 14px;
+  background: #f7f7fb;
+  color: #08090d;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.18s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 #twspot {
@@ -152,7 +177,7 @@ footer a:hover {
 
 .hero-section {
   position: relative;
-  min-height: 100svh;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
   align-items: center;
@@ -267,6 +292,10 @@ footer a:hover {
     border-color 0.18s ease,
     background 0.18s ease;
   will-change: transform;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
 }
 
 .btn.primary {
@@ -941,6 +970,7 @@ footer small {
   }
 
   #twspot,
+  .scan,
   .twfx {
     display: none;
   }

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">TIMO WORKS</title>
+  <desc id="desc">Spare-time work matching and attendance operations for mobile-first teams.</desc>
+  <defs>
+    <radialGradient id="red" cx="18%" cy="16%" r="72%">
+      <stop offset="0%" stop-color="#ff3b47" stop-opacity=".72"/>
+      <stop offset="52%" stop-color="#ff3b47" stop-opacity=".12"/>
+      <stop offset="100%" stop-color="#08090d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cyan" cx="82%" cy="12%" r="62%">
+      <stop offset="0%" stop-color="#16e0ff" stop-opacity=".52"/>
+      <stop offset="58%" stop-color="#16e0ff" stop-opacity=".08"/>
+      <stop offset="100%" stop-color="#08090d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mark" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ff3b47"/>
+      <stop offset="100%" stop-color="#16e0ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#08090d"/>
+  <rect width="1200" height="630" fill="url(#red)"/>
+  <rect width="1200" height="630" fill="url(#cyan)"/>
+  <g opacity=".26">
+    <path d="M0 132h1200M0 258h1200M0 384h1200M0 510h1200M164 0v630M328 0v630M492 0v630M656 0v630M820 0v630M984 0v630" stroke="#fff" stroke-width="1"/>
+  </g>
+  <g transform="translate(86 78)">
+    <rect width="92" height="92" fill="none" stroke="#ff3b47" stroke-width="3"/>
+    <text x="46" y="60" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" fill="#fff">TW</text>
+  </g>
+  <g transform="translate(86 232)">
+    <text font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="900" fill="#fff" letter-spacing="-4">TIMO WORKS</text>
+    <text y="82" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="url(#mark)">WORK TIME NETWORK</text>
+    <text y="150" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#d8dce8">Spare-time work matching, partner staffing, and attendance operations.</text>
+  </g>
+  <g transform="translate(842 198)">
+    <circle cx="126" cy="126" r="122" fill="none" stroke="#ffffff" stroke-opacity=".16" stroke-width="2"/>
+    <circle cx="126" cy="126" r="70" fill="none" stroke="#ff3b47" stroke-opacity=".58" stroke-width="2"/>
+    <circle cx="126" cy="126" r="38" fill="url(#mark)"/>
+    <text x="126" y="137" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" fill="#08090d">T</text>
+  </g>
+</svg>

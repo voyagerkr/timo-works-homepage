@@ -50,6 +50,22 @@ const labels: Record<Lang, string> = {
 
 const order: Lang[] = ['ko', 'en', 'ja', 'zh']
 
+function initialLang(): Lang {
+  const saved = localStorage.getItem('twLang') as Lang | null
+  if (saved && order.includes(saved)) return saved
+
+  const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language]
+  for (const item of browserLanguages) {
+    const code = item.toLowerCase()
+    if (code.startsWith('ko')) return 'ko'
+    if (code.startsWith('ja')) return 'ja'
+    if (code.startsWith('zh')) return 'zh'
+    if (code.startsWith('en')) return 'en'
+  }
+
+  return 'ko'
+}
+
 const copy: Record<Lang, SiteCopy> = {
   ko: {
     nav: ['제품', '파트너', '미션', '뉴스', '문의'],
@@ -267,7 +283,7 @@ const copy: Record<Lang, SiteCopy> = {
     ],
     newsTitle: '最新动态',
     news: [
-      ['TIMO 劳动者流程已完成', '劳动者应用与后端 MVP 已达到 launch-candidate 覆盖。'],
+      ['TIMO 工作者流程已完成', '工作者应用与后端 MVP 已达到 launch-candidate 覆盖。'],
       ['TEMPO 生产部署已开启', 'tempo.timo.work 部署与生产准备检查正在推进。'],
       ['TIMO 伙伴网络', '我们正在准备连接空闲时间工作者与用人伙伴的入驻模式。'],
     ],
@@ -278,10 +294,7 @@ const copy: Record<Lang, SiteCopy> = {
 }
 
 function App() {
-  const [lang, setLang] = useState<Lang>(() => {
-    const saved = localStorage.getItem('twLang')
-    return order.includes(saved as Lang) ? (saved as Lang) : 'ko'
-  })
+  const [lang, setLang] = useState<Lang>(() => initialLang())
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const t = copy[lang]
 
@@ -295,6 +308,9 @@ function App() {
 
   return (
     <main>
+      <a className="skip-link" href="#products">
+        Skip to content
+      </a>
       <div id="twspot" aria-hidden="true" />
       <nav className="nav" aria-label="Primary">
         <a className="brand" href="#top" aria-label="TIMO WORKS home">
@@ -310,7 +326,13 @@ function App() {
         </div>
         <div className="langs" aria-label="Language">
           {order.map((item) => (
-            <button className={item === lang ? 'active' : ''} key={item} onClick={() => setLang(item)} type="button">
+            <button
+              aria-current={item === lang ? 'true' : undefined}
+              className={item === lang ? 'active' : ''}
+              key={item}
+              onClick={() => setLang(item)}
+              type="button"
+            >
               {labels[item]}
             </button>
           ))}
@@ -372,7 +394,7 @@ function App() {
           <p className="section-label cyan">{t.timoTitle}</p>
           <h2>{t.timoSub}</h2>
           <p>{t.timoBody}</p>
-          <a className="btn ghost magnetic" href="https://github.com/voyagerkr/timo" target="_blank" rel="noreferrer">
+          <a className="btn ghost magnetic" href="#contact">
             {t.learn}
           </a>
         </div>
